@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/", mw.validateProjectId, async (req, res, next) => {
+router.get("/:id", mw.validateProjectId, async (req, res, next) => {
   const { id } = req.params;
   try {
     const project = await Projects.get(id);
