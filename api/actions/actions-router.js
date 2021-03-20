@@ -30,4 +30,20 @@ router.post("/", mw.validateActionBody, async (req, res, next) => {
   }
 });
 
+router.put(
+  "/:id",
+  mw.validateActionId,
+  mw.validateActionBody,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const changes = req.body;
+    try {
+      const action = await Actions.update(id, changes);
+      res.status(200).json(action);
+    } catch (err) {
+      next({ error: err, message: err.message, status: 500 });
+    }
+  }
+);
+
 module.exports = router;

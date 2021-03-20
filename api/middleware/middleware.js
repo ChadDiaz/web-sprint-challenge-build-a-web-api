@@ -54,25 +54,11 @@ async function validateProjectId(req, res, next) {
   }
 }
 
-async function validateProjectIdAction(req, res, next) {
-  const id = req.body.project_id;
-  try {
-    const data = Projects.get(id);
-    if (!data) {
-      res.status(404).json({
-        message: `Project ${id} not found. Please provide a valid id.`,
-      });
-    } else {
-      next();
-    }
-  } catch (err) {
-    next({ error: err, message: err.message, status: 500 });
-  }
-}
+
 
 module.exports = {
   validateActionId: validateActionId,
   validateActionBody: validateActionBody,
   validateProjectId: validateProjectId,
-  validateProjectIdAction: validateProjectIdAction,
+  
 };
