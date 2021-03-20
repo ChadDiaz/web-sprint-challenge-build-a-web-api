@@ -22,13 +22,13 @@ function validateActionBody(req, res, next) {
   const body = req.body;
   try {
     if (body && Object.keys(body).length === 0) {
-      next({ message: "missing user data", status: 400 });
+      next({ message: "missing actions data. Please provide project_id, description and notes", status: 400 });
     } else if (!body.project_id) {
       next({ message: "missing project id", status: 400 });
     } else if (!body.description) {
-      next({ message: "missing description", status: 400 });
+      next({ message: "missing action description", status: 400 });
     } else if (!body.notes) {
-      next({ message: "missing notes", status: 400 });
+      next({ message: "missing action notes", status: 400 });
     } else {
       next();
     }
@@ -54,11 +54,26 @@ async function validateProjectId(req, res, next) {
   }
 }
 
-
+function validateProjectBody(req, res, next) {
+  const body = req.body;
+  try {
+    if (body && Object.keys(body).length === 0) {
+      next({ message: "missing project info. Please provide name and description", status: 400 });
+    } else if (!body.name) {
+      next({ message: "missing project name", status: 400 });
+    } else if (!body.description) {
+      next({ message: "missing project description", status: 400 });
+    } else {
+      next();
+    }
+  } catch (err) {
+    next({ message: err.message, status: 500 });
+  }
+}
 
 module.exports = {
   validateActionId: validateActionId,
   validateActionBody: validateActionBody,
   validateProjectId: validateProjectId,
-  
+  validateProjectBody: validateProjectBody,
 };

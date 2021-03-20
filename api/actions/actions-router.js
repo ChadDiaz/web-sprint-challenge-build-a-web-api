@@ -38,12 +38,22 @@ router.put(
     const { id } = req.params;
     const changes = req.body;
     try {
-      const action = await Actions.update(id, changes);
-      res.status(200).json(action);
+      const updatedAction = await Actions.update(id, changes);
+      res.status(200).json(updatedAction);
     } catch (err) {
       next({ error: err, message: err.message, status: 500 });
     }
   }
 );
+
+router.delete("/:id", mw.validateActionId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const action = await Actions.delete(id);
+    res.status(204).json({ message: `${id} has been deleted successfully.` });
+  } catch (err) {
+    next({ error: err, message: err.message, status: 500 });
+  }
+});
 
 module.exports = router;
