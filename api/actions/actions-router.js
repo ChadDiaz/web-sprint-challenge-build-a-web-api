@@ -50,7 +50,7 @@ router.delete("/:id", mw.validateActionId, async (req, res, next) => {
   const { id } = req.params;
   try {
     const action = await Actions.delete(id);
-    res.status(204).json({ message: `${id} has been deleted successfully.` });
+    res.status(204).json(action);
   } catch (err) {
     next({ error: err, message: err.message, status: 500 });
   }
