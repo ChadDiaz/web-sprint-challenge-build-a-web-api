@@ -1,7 +1,18 @@
-const express = require('express');
+const express = require("express");
 const server = express();
 
-// Complete your server here!
-// Do NOT `server.listen()` inside this file!
+const actionsRouter = require("./actions/actions-router.js");
+const projectsRouter = require("./projects/projects-router.js");
+// const helmet = require("helmet");
+
+// server.use(helmet());
+server.use(express.json());
+
+server.use("/api/actions", actionsRouter);
+server.use("/api/projects", projectsRouter);
+
+server.use("/", (req, res) => {
+  res.status(200).send(`<h2>4.1 Sprint API is up</h2>`);
+});
 
 module.exports = server;
